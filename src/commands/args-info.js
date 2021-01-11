@@ -1,10 +1,10 @@
-module.exports = {
+export default {
 	name: 'args-info',
 	description: 'Information about the arguments provided.',
 	args: true,
 	usage: '<user> <role>',
-	execute(message, args) {
-		if (args[0] === 'foo') {
+	execute: (message, args) => {
+		if(args[0] === 'foo') {
 			return message
 				.channel
 				.send('bar');
