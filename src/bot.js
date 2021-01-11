@@ -7,20 +7,11 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
 import { connectDb } from './models/index.js';
+import commands from './commands/index.js';
 
-
-import ping from './commands/ping.js';
-client
-	.commands
-	.set(ping.name, ping);
-import argsInfo from './commands/args-info.js';
-client
-	.commands
-	.set(argsInfo.name, argsInfo);
-import help from './commands/help.js';
-client
-	.commands
-	.set(help.name, help);
+commands.map(command => {
+	client.commands.set(command.name, command);
+});
 
 connectDb().then(async () => {
 	console.log('DB connected!');
