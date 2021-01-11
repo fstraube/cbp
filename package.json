@@ -1,29 +1,29 @@
 {
-  "name": "cbp",
-  "version": "1.0.0",
-  "description": "",
-  "type": "module",
-  "main": "bot.js",
-  "scripts": {
-    "start": "nodemon --exec babel-node src/bot.js --experimental-json-modules",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "discord.js": "^12.5.1",
-    "dotenv": "^8.2.0",
-    "mongoose": "^5.11.10"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/node": "^7.12.10",
-    "@babel/preset-env": "^7.12.11"
-  },
-  "babel": {
-    "presets": [
-      "@babel/preset-env"
-    ]
-  }
+	"name": "cbp",
+	"version": "1.0.0",
+	"description": "",
+	"type": "module",
+	"main": "bot.js",
+	"scripts": {
+		"start": "nodemon --exec babel-node src/bot.js --experimental-json-modules",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"discord.js": "^12.5.1",
+		"dotenv": "^8.2.0",
+		"mongoose": "^5.11.10"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.12.10",
+		"@babel/node": "^7.12.10",
+		"@babel/preset-env": "^7.12.11"
+	},
+	"babel": {
+		"presets": [
+			"@babel/preset-env"
+		]
+	}
 }

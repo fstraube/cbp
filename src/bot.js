@@ -6,6 +6,9 @@ const { prefix } = config;
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
+import { connectDb } from './models/index.js';
+
+
 import ping from './commands/ping.js';
 client
 	.commands
@@ -19,9 +22,11 @@ client
 	.commands
 	.set(help.name, help);
 
-client.once('ready', () => {
-	console.log('James: Ready!');
-
+connectDb().then(async () => {
+	console.log('DB connected!');
+	client.once('ready', () => {
+		console.log('James: Ready!');
+	});
 });
 
 client.on('message', message => {
@@ -54,5 +59,6 @@ client.on('message', message => {
 		message.reply('there was an error trying to execute that command!');
 	}
 });
+
 
 client.login(process.env.DISCORDJS_BOT_TOKEN);
