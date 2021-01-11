@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { memberSchenma } from './member';
 
 const teamSchenma = new mongoose.Schema(
 	{
@@ -7,11 +8,7 @@ const teamSchenma = new mongoose.Schema(
 			unique: true,
 			required: true,
 		},
-		palyer: [{
-			type: String,
-			unique: true,
-			required: true,
-		}],
+		palyer: [memberSchenma],
 	},
 	{ timestamp: true },
 );
