@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 export const teamSchema = new mongoose.Schema({
+	id: String,
 	teamname: {
 		type: String,
 		unique: true,
@@ -12,9 +13,10 @@ export const teamSchema = new mongoose.Schema({
 	},
 }, { timestamp: true });
 
-teamSchema.statics.createTeam = async (teamname, teammembers) => {
-	const newTeam = new Team({ teamname, teammembers });
-	return newTeam
+teamSchema.statics.create = async (newTeam) => {
+	const team = new Team(newTeam);
+	console.log(team);
+	return team
 		.save();
 };
 

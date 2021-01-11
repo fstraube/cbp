@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 
-// import User from './user';
-// import Message from './message';
+import Team from './team.js';
 
 const dbOptions = {
 	useNewUrlParser: true,
@@ -14,8 +13,8 @@ const connectDb = () => {
 	return mongoose.connect(process.env.DB_CONNECTION_TOURNAMENT, dbOptions);
 };
 
-// const models = { User, Message };
+const models = { Team };
 
 export { connectDb };
 
-// export default models;
+export default models;
