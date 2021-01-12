@@ -31,7 +31,7 @@ export default {
 		Team.create(newTeam).then(team => {
 			return message.channel.send(returnEmbedMessage('createdTeamSuccess', team));
 		}).catch(err => {
-			console.log(err.message);
+			console.error(err.message);
 			return message.author.send(returnMessage('createdTeamError', teamname));
 		});
 	},
