@@ -16,7 +16,8 @@ commands.map(command => {
 		.set(command.name, command);
 });
 
-const eraseDatabaseOnSync = true;
+const eraseDatabaseOnSync = false;
+
 connectDb().then(async () => {
 	if (eraseDatabaseOnSync) {
 		await Promise.all([Team.deleteMany({})]);
@@ -65,6 +66,7 @@ client.on('message', (message) => {
 	}
 
 	try {
+		console.log('CMD', command);
 		command.execute(message, args);
 	}
 	catch (error) {

@@ -12,7 +12,7 @@ export default {
 	execute: (message, args) => {
 		const count = args[0];
 
-		for (let i = 0; i <= count; i++) {
+		for (let i = 0; i < count; i++) {
 
 			const teamname = `Team${i}`;
 
