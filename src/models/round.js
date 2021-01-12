@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
 
-export const groupSchema = new mongoose.Schema({
+export const roundSchema = new mongoose.Schema({
 	group: {
 		type: String,
 		unique: true,
 		required: true,
 	},
-	teams: {
+	rounds: {
 		type: [Object],
 		default: undefined,
 		unique: true,
@@ -14,14 +14,14 @@ export const groupSchema = new mongoose.Schema({
 	},
 }, { timestamp: true });
 
-groupSchema.statics.create = async (newGroup) => {
-	const group = new Group(newGroup);
-	return group
+roundSchema.statics.create = async (newRound) => {
+	const round = new Round(newRound);
+	return round
 		.save().catch(err => {
 			throw new Error(err);
 		});
 };
 
-const Group = mongoose.model('Group', groupSchema);
+const Round = mongoose.model('Round', roundSchema);
 
-export default Group;
+export default Round;

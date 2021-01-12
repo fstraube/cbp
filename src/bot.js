@@ -8,7 +8,7 @@ client.commands = new Discord.Collection();
 import commands from './commands/index.js';
 import { connectDb } from './models/index.js';
 import models from './models/index.js';
-const { Team } = models;
+const { Team, Group, Round } = models;
 
 commands.map(command => {
 	client
@@ -20,7 +20,7 @@ const eraseDatabaseOnSync = false;
 
 connectDb().then(async () => {
 	if (eraseDatabaseOnSync) {
-		await Promise.all([Team.deleteMany({})]);
+		await Promise.all([Team.deleteMany({}), Group.deleteMany({}), Round.deleteMany({})]);
 	}
 	console.log('DB connected!');
 });

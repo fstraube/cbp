@@ -30,9 +30,9 @@ export default {
 		});
 
 		const newGroupA = { group: 'A', teams: teamsGroupA };
-		Group.create(newGroupA).catch(err => console.error(err.message));
+		await Group.create(newGroupA).catch(err => console.error(err.message));
 		const newGroupB = { group: 'B', teams: teamsGroupB };
-		Group.create(newGroupB).catch(err => console.error(err.message));
+		await Group.create(newGroupB).catch(err => console.error(err.message));
 
 		return message.channel.send(returnEmbedMessage('groupDraw'))
 			.then(msg => msg.delete({ timeout: 5000 }))
