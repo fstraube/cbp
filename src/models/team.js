@@ -15,9 +15,10 @@ export const teamSchema = new mongoose.Schema({
 
 teamSchema.statics.create = async (newTeam) => {
 	const team = new Team(newTeam);
-	console.log(team);
 	return team
-		.save();
+		.save().catch(err => {
+			throw new Error(err);
+		});
 };
 
 const Team = mongoose.model('Team', teamSchema);
