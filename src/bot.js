@@ -5,19 +5,29 @@ import config from './config.js';
 const { prefix } = config;
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
-
-import { connectDb } from './models/index.js';
 import commands from './commands/index.js';
+import { connectDb } from './models/index.js';
+import models from './models/index.js';
+const { Team } = models;
 
 commands.map(command => {
 	client.commands.set(command.name, command);
 });
 
+const eraseDatabaseOnSync = true;
 connectDb().then(async () => {
+
+	if (eraseDatabaseOnSync) {
+		await Promise.all([
+			Team.deleteMany({}),
+		]);
+	}
+
 	console.log('DB connected!');
 	client.once('ready', () => {
 		console.log('James: Ready!');
 	});
+
 });
 
 client.on('message', message => {
