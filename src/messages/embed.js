@@ -36,7 +36,7 @@ const returnEmbedMessage = (idf, payload) => {
 					? imgGroupA
 					: imgGroupB);
 		default:
-			return 'Sorry I did\'nt get you. Try \'/help\' to see all my commands.';
+			return 'Sorry I didn\'t get you. Try \'/help\' to see all my commands.';
 	}
 };
 export default returnEmbedMessage;

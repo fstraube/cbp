@@ -14,7 +14,7 @@ export default {
 		const groupB = await Group.findOne({ group: 'B' });
 		const groups = [groupA, groupB];
 
-		const rounds = groups.map(group => (
+		const roundsByGroup = groups.map(group => (
 			{
 				round1:
 					[
@@ -34,10 +34,37 @@ export default {
 			}
 		));
 
-		const newRoundA = { group: 'A', rounds: rounds[0] };
-		await Round.create(newRoundA).catch(err => console.error(err.message));
-		const newRoundB = { group: 'B', rounds: rounds[1] };
-		await Round.create(newRoundB).catch(err => console.error(err.message));
+		groups.forEach(async (group) =>
+			await Promise.all([Round.create({
+				group: group.group,
+				round: '1',
+				matches: [
+					{ home: group.teams[0].teamname, away: group.teams[1].teamname },
+					{ home: group.teams[2].teamname, away: group.teams[3].teamname },
+				],
+			}),
+			Round.create({
+				group: group.group,
+				round: '2',
+				matches: [
+					{ home: group.teams[2].teamname, away: group.teams[0].teamname },
+					{ home: group.teams[3].teamname, away: group.teams[1].teamname },
+				],
+			}),
+			Round.create({
+				group: group.group,
+				round: '3',
+				matches: [
+					{ home: group.teams[3].teamname, away: group.teams[0].teamname },
+					{ home: group.teams[2].teamname, away: group.teams[1].teamname },
+				],
+			}),
+			],
+			),
+		);
+
+		const newRoundA = { group: 'A', rounds: roundsByGroup[0] };
+		const newRoundB = { group: 'B', rounds: roundsByGroup[1] };
 
 		await message.channel.send(returnEmbedMessage('rounds', newRoundA));
 		await message.channel.send(returnEmbedMessage('rounds', newRoundB));

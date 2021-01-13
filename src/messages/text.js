@@ -9,8 +9,12 @@ const returnMessage = (idf, payload) => {
 			return `your team \`${payload}\` already exists. ${adminMsg}`;
 		case 'createGroups':
 			return 'Groups';
+		case 'groupsExist':
+			return 'Groups A | B already exists!';
+		case 'startRound':
+			return `Created channel \`${payload.match.home} vs. ${payload.match.away}\`. Please join your channel!`;
 		default:
-			return 'Sorry I did\'nt get you. Try \'/help\' to see all my commands.';
+			return `Sorry something went wrong. ${adminMsg}`;
 	}
 };
 export default returnMessage;

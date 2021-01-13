@@ -31,6 +31,19 @@ client.once('ready', () => {
 });
 
 client.on('message', (message) => {
+
+	if (message.content.startsWith('#')) {
+		const args = message
+			.content
+			.slice(1)
+			.split('');
+		const command = client
+			.commands
+			.get('result');
+
+		command.execute(message, args);
+	}
+
 	if (!message.content.startsWith(prefix) || message.author.bot) {
 		return;
 	}
@@ -66,7 +79,6 @@ client.on('message', (message) => {
 	}
 
 	try {
-		console.log('CMD', command);
 		command.execute(message, args);
 	}
 	catch (error) {
