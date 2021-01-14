@@ -28,9 +28,13 @@ export default {
 
 		console.log(match);
 
-		const cups = args[0];
-		const abs = args[1];
-		const oabs = args[2];
+		// const cups = args[0];
+		// const wabs = args[1];
+		// const labs = args[2];
+		// wins: Number,
+		// defeats: Number,
+		// cups: Number,
+		// ab: Number,
 
 		const round = await Round.find().where({ matches: { $eq: { home: match.home, away: match.away } } });
 

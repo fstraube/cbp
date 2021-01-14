@@ -12,10 +12,7 @@ export const teamSchema = new mongoose.Schema({
 		default: undefined,
 	},
 	group: String,
-	wins: Number,
-	defeats: Number,
-	cups: Number,
-	ab: Number,
+	stats: Object,
 }, { timestamp: true });
 
 teamSchema.statics.create = async (newTeam) => {
@@ -24,6 +21,14 @@ teamSchema.statics.create = async (newTeam) => {
 		.save().catch(err => {
 			throw new Error(err);
 		});
+};
+
+teamSchema.statics.update = async (id, stats) => {
+	const updatedTeam = await Team.updateOne({ id }, { stats }).catch(err => {
+		throw new Error(err);
+	});
+
+	return updatedTeam;
 };
 
 const Team = mongoose.model('Team', teamSchema);

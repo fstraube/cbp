@@ -20,12 +20,22 @@ const returnEmbedMessage = (idf, payload) => {
 					value: payload.teammembers[1],
 					inline: true,
 				});
+		case 'teams':
+			console.log(payload)
+			return new MessageEmbed()
+				.setTitle('Teams:')
+				.addFields(payload.map(team => (
+					{
+						name: `${team.teamname}`,
+						value: `${team.teammembers[0]} | ${team.teammembers[1]}`,
+					})),
+				).setThumbnail('https://media.giphy.com/media/xT5LMGupUKCHb7DnFu/giphy.gif');
 		case 'groupDraw':
 			return new MessageEmbed().setImage('https://media.giphy.com/media/3o6MboNFtQ3bUIAgVi/giphy.gif');
 		case 'createGroups':
 			return new MessageEmbed().addFields(payload.teams.map(team => ({ name: team.teamname, value: `${team.teammembers[0]}, ${team.teammembers[1]}` }))).setThumbnail(payload.group === 'A'
 				? imgGroupA
-				: imgGroupB);
+				: imgGroupB)
 		case 'rounds':
 			return new MessageEmbed()
 				.setTitle('Group')

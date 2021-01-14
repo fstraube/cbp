@@ -1,8 +1,8 @@
 import models from './../models/index.js';
-const { Team, Round } = models;
+const { Round } = models;
 
 import messages from './../messages/index.js';
-const { returnMessage, returnEmbedMessage } = messages;
+const { returnMessage } = messages;
 
 export default {
 	name: 'start-round',
