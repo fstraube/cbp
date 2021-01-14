@@ -13,6 +13,11 @@ const returnMessage = (idf, payload) => {
 			return 'Groups A | B already exists!';
 		case 'startRound':
 			return `Created channel \`${payload.match.home} vs. ${payload.match.away}\`. Please join your channel!`;
+		case 'win':
+			return `**Congratulations!** Your team \`${payload.winner}\` won ` +
+				`with \`${payload.cups}\` ${payload.cups === '1' ? 'cup' : 'cups'} ` +
+				`and \`${payload.wabs}\` ${payload.wabs === '1' ? 'airball' : 'airballs'} vs. \`${payload.loser}\` ` +
+				`with \`${payload.labs}\` ${payload.labs === '1' ? 'airball' : 'airballs'}!`;
 		default:
 			return `Sorry something went wrong. ${adminMsg}`;
 	}

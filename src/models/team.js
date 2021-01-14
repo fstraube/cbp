@@ -11,9 +11,14 @@ export const teamSchema = new mongoose.Schema({
 		type: [String],
 		default: undefined,
 	},
-	group: String,
-	stats: Object,
-}, { timestamp: true });
+	group: {
+		type: String, default: null,
+	},
+	cups: { type: Number, default: 0 },
+	abs: { type: Number, default: 0 },
+	wins: { type: Number, default: 0 },
+	defeats: { type: Number, default: 0 },
+}, { unique: true, timestamp: true });
 
 teamSchema.statics.create = async (newTeam) => {
 	const team = new Team(newTeam);
@@ -23,8 +28,16 @@ teamSchema.statics.create = async (newTeam) => {
 		});
 };
 
-teamSchema.statics.update = async (id, stats) => {
-	const updatedTeam = await Team.updateOne({ id }, { stats }).catch(err => {
+teamSchema.statics.updateTeam = async (teamname, data) => {
+	const updatedTeam = await Team.updateOne({ teamname }, {
+		group: data.group,
+		$inc: {
+			cups: data.cups,
+			abs: data.abs,
+			wins: data.wins,
+			defeats: data.defeats,
+		},
+	}).catch(err => {
 		throw new Error(err);
 	});
 

@@ -1,16 +1,11 @@
 import mongoose from 'mongoose';
 
 export const roundSchema = new mongoose.Schema({
-	group: {
-		type: String,
-		unique: true,
-		required: true,
-	},
-	rounds: {
+	group: String,
+	round: Number,
+	matches: {
 		type: [Object],
 		default: undefined,
-		unique: true,
-		required: true,
 	},
 }, { timestamp: true });
 

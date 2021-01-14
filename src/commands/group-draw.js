@@ -6,6 +6,7 @@ const { returnEmbedMessage } = messages;
 
 export default {
 	name: 'group-draw',
+	aliases: ['groupdraw', 'draw', 'lottery'],
 	description: 'Create groups A | B for tournament',
 	execute: async (message) => {
 

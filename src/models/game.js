@@ -8,7 +8,7 @@ export const gameSchema = new mongoose.Schema({
 	wab: Number,
 	loser: String,
 	lab: Number,
-}, { timestamp: true });
+}, { unique: true, timestamp: true });
 
 gameSchema.statics.create = async (newGame) => {
 	const game = new Game(newGame);

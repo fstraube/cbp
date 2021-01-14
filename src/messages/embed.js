@@ -7,21 +7,32 @@ const returnEmbedMessage = (idf, payload) => {
 	const imgGroupB = 'https://docs.google.com/drawings/d/e/2PACX-1vTHdY16E7672xWLJgTqyKW4KvOKLEa_k7bLQ' +
 		'H8nFpm5rMJd1Z-vu6EwfcQ3EWes6svJ12_4KThMXZAQ/pub?w=310&h=267';
 
+	const winGifs = [
+		'https://media.giphy.com/media/lMameLIF8voLu8HxWV/giphy.gif',
+		'https://media.giphy.com/media/xT8qAY7e9If38xkrIY/giphy.gif',
+		'https://media.giphy.com/media/s2qXK8wAvkHTO/giphy.gif',
+		'https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif',
+		'https://media.giphy.com/media/LPBhHit55Xxx03lllW/giphy.gif',
+		'https://media.giphy.com/media/m8crpzTJFRDPhqqhXJ/giphy.gif',
+		'https://media.giphy.com/media/kQg7fQMvVD5Ha/giphy.gif',
+	];
+
+	const rndWinGif = Math.floor(Math.random() * winGifs.length);
+
 	switch (idf) {
 		case 'createdTeamSuccess':
 			return new MessageEmbed()
 				.setTitle(`Team: ${payload.teamname}`)
 				.addFields({
-					name: 'Member 1:',
+					name: 'Member 1',
 					value: payload.teammembers[0],
 					inline: true,
 				}, {
-					name: 'Member 2:',
+					name: 'Member 2',
 					value: payload.teammembers[1],
 					inline: true,
 				});
-		case 'teams':
-			console.log(payload)
+		case 'listTeams':
 			return new MessageEmbed()
 				.setTitle('Teams:')
 				.addFields(payload.map(team => (
@@ -35,7 +46,7 @@ const returnEmbedMessage = (idf, payload) => {
 		case 'createGroups':
 			return new MessageEmbed().addFields(payload.teams.map(team => ({ name: team.teamname, value: `${team.teammembers[0]}, ${team.teammembers[1]}` }))).setThumbnail(payload.group === 'A'
 				? imgGroupA
-				: imgGroupB)
+				: imgGroupB);
 		case 'rounds':
 			return new MessageEmbed()
 				.setTitle('Group')
@@ -45,6 +56,8 @@ const returnEmbedMessage = (idf, payload) => {
 				.setThumbnail(payload.group === 'A'
 					? imgGroupA
 					: imgGroupB);
+		case 'win':
+			return new MessageEmbed().setImage(winGifs[rndWinGif]);
 		default:
 			return 'Sorry I didn\'t get you. Try \'/help\' to see all my commands.';
 	}

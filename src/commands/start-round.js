@@ -11,11 +11,6 @@ export default {
 	args: true,
 	execute: async (message, args) => {
 
-		const members = message.guild.members.cache;
-		members.map(member =>
-			message.channel.send(`<@!${member.user.id}>`),
-		);
-
 		const n = args[0];
 		const roundByGroup = await Round.find({ round: n });
 		roundByGroup.forEach(group => (

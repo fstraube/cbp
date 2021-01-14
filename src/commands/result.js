@@ -1,5 +1,5 @@
 import models from './../models/index.js';
-const { Team, Round } = models;
+const { Team, Round, Game } = models;
 
 import messages from './../messages/index.js';
 const { returnMessage, returnEmbedMessage } = messages;
@@ -11,33 +11,54 @@ export default {
 	args: true,
 	execute: async (message, args) => {
 
-		// const user = message.author;
-
-		const team = await Team.findOne({ id: /500727550948147211/i });
+		const user = message.author;
+		const id = new RegExp(user.id, 'i');
+		const team = await Team.findOne({ id: id });
 		const teamname = team.teamname;
 		console.log(teamname);
-		const channels = message.guild.channels.cache.map(channel => ({
+		const channelList = message.guild.channels.cache.map(channel => ({
 			id: channel.id,
 			name: channel.name,
 		}));
 
-		const matchChannel = channels.find(channel => channel.name.includes(teamname));
+		const matchChannel = channelList.find(channel => channel.name.includes(teamname));
 
 		const matchName = matchChannel.name.split(' ');
 		const match = { home: matchName[0], away: matchName[2] };
 
-		console.log(match);
 
-		// const cups = args[0];
-		// const wabs = args[1];
-		// const labs = args[2];
-		// wins: Number,
-		// defeats: Number,
-		// cups: Number,
-		// ab: Number,
-
-		const round = await Round.find().where({ matches: { $eq: { home: match.home, away: match.away } } });
-
+		const round = await Round.findOne({ matches: { $eq: { home: match.home, away: match.away } } });
 		console.log(round);
+		const newGame = {
+			group: round.group,
+			round: round.round,
+			cups: args[0],
+			winner: teamname,
+			wabs: args[1],
+			loser: (teamname === match.home) ? match.away : match.home,
+			labs: args[2],
+		};
+
+		await Promise.all([Game.create(newGame),
+		Team.updateTeam(newGame.winner, {
+			group: newGame.group,
+			cups: Number(newGame.cups),
+			abs: Number(newGame.wabs),
+			wins: 1,
+			defeats: 0,
+		}),
+		Team.updateTeam(newGame.loser, {
+			group: newGame.group,
+			cups: Number(-newGame.cups),
+			abs: Number(newGame.labs),
+			wins: 0,
+			defeats: 1,
+		})]).catch(err => console.error(err.message));
+
+		return message.channel.send(returnMessage('win', newGame))
+			.then(() => message.channel.send(returnEmbedMessage('win'))
+				.then(msg => msg.delete({ timeout: 5000 })))
+			.catch(err => console.error(err.message));
+
 	},
 };
