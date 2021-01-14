@@ -18,8 +18,12 @@ const returnMessage = (idf, payload) => {
 				`with \`${payload.cups}\` ${payload.cups === '1' ? 'cup' : 'cups'} ` +
 				`and \`${payload.wabs}\` ${payload.wabs === '1' ? 'airball' : 'airballs'} vs. \`${payload.loser}\` ` +
 				`with \`${payload.labs}\` ${payload.labs === '1' ? 'airball' : 'airballs'}!`;
+		case 'deleteChannel':
+			return `\`${payload.name}\` channel closed!`;
+		case 'resultExists':
+			return 'result exists. Is there is a problem? ' + adminMsg;
 		default:
-			return `Sorry something went wrong. ${adminMsg}`;
+			return `sorry something went wrong. ${adminMsg}`;
 	}
 };
 export default returnMessage;

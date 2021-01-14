@@ -15,7 +15,7 @@ export default {
 		const id = new RegExp(user.id, 'i');
 		const team = await Team.findOne({ id: id });
 		const teamname = team.teamname;
-		console.log(teamname);
+
 		const channelList = message.guild.channels.cache.map(channel => ({
 			id: channel.id,
 			name: channel.name,
@@ -23,9 +23,12 @@ export default {
 
 		const matchChannel = channelList.find(channel => channel.name.includes(teamname));
 
+		if (!matchChannel) {
+			return message.reply(returnMessage('resultExists'));
+		}
+
 		const matchName = matchChannel.name.split(' ');
 		const match = { home: matchName[0], away: matchName[2] };
-
 
 		const round = await Round.findOne({ matches: { $eq: { home: match.home, away: match.away } } });
 		console.log(round);
@@ -55,10 +58,12 @@ export default {
 			defeats: 1,
 		})]).catch(err => console.error(err.message));
 
-		return message.channel.send(returnMessage('win', newGame))
-			.then(() => message.channel.send(returnEmbedMessage('win'))
-				.then(msg => msg.delete({ timeout: 5000 })))
-			.catch(err => console.error(err.message));
-
+		await Promise.all([
+			message.channel.send(returnMessage('win', newGame)),
+			message.channel.send(returnEmbedMessage('win'))
+				.then(msg => msg.delete({ timeout: 5000 })),
+			message.channel.send(returnMessage('deleteChannel', matchChannel)),
+			message.guild.channels.cache.get(matchChannel.id).delete(),
+		]).catch(err => console.error(err.message));
 	},
 };
