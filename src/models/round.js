@@ -3,13 +3,14 @@ import mongoose from 'mongoose';
 export const roundSchema = new mongoose.Schema({
 	group: {
 		type: String,
+		unique: true,
+		required: true,
 	},
-	round: {
-		type: String,
-	},
-	matches: {
+	rounds: {
 		type: [Object],
 		default: undefined,
+		unique: true,
+		required: true,
 	},
 }, { timestamp: true });
 

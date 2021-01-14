@@ -11,6 +11,11 @@ export const teamSchema = new mongoose.Schema({
 		type: [String],
 		default: undefined,
 	},
+	group: String,
+	wins: Number,
+	defeats: Number,
+	cups: Number,
+	ab: Number,
 }, { timestamp: true });
 
 teamSchema.statics.create = async (newTeam) => {

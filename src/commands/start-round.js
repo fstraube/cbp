@@ -20,7 +20,7 @@ export default {
 		const roundByGroup = await Round.find({ round: n });
 		roundByGroup.forEach(group => (
 			group.matches.forEach(async match => (
-				// await message.guild.channels.create(`${match.home} vs. ${match.away}`, { type: 'voice', reason: `Round ${n}` }),
+				await message.guild.channels.create(`${match.home} vs. ${match.away}`, { type: 'voice', reason: `Round ${n}` }),
 				await message.channel.send(returnMessage('startRound', { round: n, match }))
 			))
 		));
