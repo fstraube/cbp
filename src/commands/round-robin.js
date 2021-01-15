@@ -22,7 +22,7 @@ export default {
 
 		try {
 			await Round.create({ group: 'A', rounds: roundsA });
-			await Round.create({ group: 'A', rounds: roundsA });
+			await Round.create({ group: 'B', rounds: roundsB });
 		}
 		catch (err) {
 			console.error('Error saving rounds: ', err.message);
