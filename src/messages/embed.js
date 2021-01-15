@@ -58,6 +58,14 @@ const returnEmbedMessage = (idf, payload) => {
 					: imgGroupB);
 		case 'win':
 			return new MessageEmbed().setImage(winGifs[rndWinGif]);
+		case 'tables':
+			return new MessageEmbed()
+				.setTitle('Group')
+				.setDescription('| Wins | Losses | Cups | Airballs |')
+				.addFields(payload.table.map(team => ({ name: team.teamname, value: `| ${team.wins} |  ${team.defeats} | ${team.cups} | ${team.abs} |` })))
+				.setThumbnail(payload.group === 'A'
+					? imgGroupA
+					: imgGroupB);
 		default:
 			return 'Sorry I didn\'t get you. Try \'/help\' to see all my commands.';
 	}
