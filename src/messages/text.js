@@ -7,8 +7,10 @@ const returnMessage = (idf, payload) => {
 			return `your team \`${payload}\` needs a \`member\`. The proper usage would be: \`/create-team <teamname> <teammember> as @mention\``;
 		case 'createdTeamError':
 			return `your team \`${payload}\` already exists. ${adminMsg}`;
-		case 'createGroups':
-			return 'Groups';
+		case 'noTeams':
+			return 'there are no teams yet!';
+		case 'errorGroupDraw':
+			return 'something went wrong by drawing groups!';
 		case 'groupsExist':
 			return 'Groups `A` | `B` already exists!';
 		case 'startRound':

@@ -53,7 +53,7 @@ export default {
 
 		try {
 			await Game.create(newGame);
-			await Team.updateTeam(newGame.winner, {
+			await Team.updateTeam({ teamname: newGame.winner }, {
 				$inc: {
 					cups: newGame.cups,
 					abs: newGame.wabs,
@@ -61,7 +61,7 @@ export default {
 					defeats: 0,
 				},
 			});
-			await Team.updateTeam(newGame.loser, {
+			await Team.updateTeam({ teamname: newGame.loser }, {
 				$inc: {
 					cups: newGame.cups,
 					abs: -newGame.wabs,
