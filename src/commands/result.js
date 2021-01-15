@@ -52,21 +52,23 @@ export default {
 		};
 
 		try {
-			await Game.create(newGame),
-				await Team.updateTeam(newGame.winner, {
-					group: newGame.group,
+			await Game.create(newGame);
+			await Team.updateTeam(newGame.winner, {
+				$inc: {
 					cups: newGame.cups,
 					abs: newGame.wabs,
 					wins: 1,
 					defeats: 0,
-				}),
-				await Team.updateTeam(newGame.loser, {
-					group: newGame.group,
-					cups: -newGame.cups,
-					abs: newGame.labs,
+				},
+			});
+			await Team.updateTeam(newGame.loser, {
+				$inc: {
+					cups: newGame.cups,
+					abs: -newGame.wabs,
 					wins: 0,
 					defeats: 1,
-				});
+				},
+			});
 		}
 		catch (err) {
 			err => console.error('Save game an update teams: ', err.message);

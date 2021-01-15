@@ -14,7 +14,7 @@ const returnMessage = (idf, payload) => {
 		case 'startRound':
 			return `Created channel \`${payload.match.home} vs. ${payload.match.away}\`. Please join your channel!`;
 		case 'wrongResult':
-			return 'as `#result` I only accept `3` numbers for `#<cups><airballs><opponentAirballs>`!'
+			return 'as `#result` I only accept `3` numbers for `#<cups><airballs><opponentAirballs>`!';
 		case 'win':
 			return `\`Congratulations!\` Your team \`${payload.winner}\` won ` +
 				`with \`${payload.cups}\` ${payload.cups === '1' ? 'cup' : 'cups'} ` +

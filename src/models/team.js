@@ -28,16 +28,8 @@ teamSchema.statics.create = async (newTeam) => {
 		});
 };
 
-teamSchema.statics.updateTeam = async (teamname, data) => {
-	const updatedTeam = await Team.updateOne({ teamname }, {
-		group: data.group,
-		$inc: {
-			cups: data.cups,
-			abs: data.abs,
-			wins: data.wins,
-			defeats: data.defeats,
-		},
-	}).catch(err => {
+teamSchema.statics.updateTeam = async (teamname, updateData) => {
+	const updatedTeam = await Team.updateOne({ teamname }, { updateData }).catch(err => {
 		throw new Error(err);
 	});
 
