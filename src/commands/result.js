@@ -11,6 +11,14 @@ export default {
 	args: true,
 	execute: async (message, args) => {
 
+		const cups = Number(args[0]);
+		const wabs = Number(args[1]);
+		const labs = Number(args[2]);
+
+		if (isNaN(cups) || isNaN(wabs) || isNaN(labs) || args.length !== 3) {
+			return message.reply(returnMessage('wrongResult'));
+		}
+
 		const user = message.author;
 		const id = new RegExp(user.id, 'i');
 		const team = await Team.findOne({ id: id });
@@ -42,28 +50,28 @@ export default {
 			labs: args[2],
 		};
 
-		await Promise.all([Game.create(newGame),
-		Team.updateTeam(newGame.winner, {
-			group: newGame.group,
-			cups: Number(newGame.cups),
-			abs: Number(newGame.wabs),
-			wins: 1,
-			defeats: 0,
-		}),
-		Team.updateTeam(newGame.loser, {
-			group: newGame.group,
-			cups: Number(-newGame.cups),
-			abs: Number(newGame.labs),
-			wins: 0,
-			defeats: 1,
-		})]).catch(err => console.error(err.message));
+		// await Promise.all([Game.create(newGame),
+		// Team.updateTeam(newGame.winner, {
+		// 	group: newGame.group,
+		// 	cups: Number(newGame.cups),
+		// 	abs: Number(newGame.wabs),
+		// 	wins: 1,
+		// 	defeats: 0,
+		// }),
+		// Team.updateTeam(newGame.loser, {
+		// 	group: newGame.group,
+		// 	cups: Number(-newGame.cups),
+		// 	abs: Number(newGame.labs),
+		// 	wins: 0,
+		// 	defeats: 1,
+		// })]).catch(err => console.error(err.message));
 
-		await Promise.all([
-			message.channel.send(returnMessage('win', newGame)),
-			message.channel.send(returnEmbedMessage('win'))
-				.then(msg => msg.delete({ timeout: 5000 })),
-			message.channel.send(returnMessage('deleteChannel', matchChannel)),
-			message.guild.channels.cache.get(matchChannel.id).delete(),
-		]).catch(err => console.error(err.message));
+		// await Promise.all([
+		// 	message.channel.send(returnMessage('win', newGame)),
+		// 	message.channel.send(returnEmbedMessage('win'))
+		// 		.then(msg => msg.delete({ timeout: 5000 })),
+		// 	message.channel.send(returnMessage('deleteChannel', matchChannel)),
+		// 	message.guild.channels.cache.get(matchChannel.id).delete(),
+		// ]).catch(err => console.error(err.message));
 	},
 };
