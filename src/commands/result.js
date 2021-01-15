@@ -21,13 +21,13 @@ export default {
 
 		const user = message.author;
 		const id = new RegExp(user.id, 'i');
-		const team = await Team.findOne({ id: id });
+		const team = await Team.findOne({ id: id }).catch(err => console.error('Find team by id: ', err.message));
 		const teamname = team.teamname;
 
 		const channelList = message.guild.channels.cache.map(channel => ({
 			id: channel.id,
 			name: channel.name,
-		}));
+		})).catch(err => console.error('Get channels from server: ', err.message));
 
 		const matchChannel = channelList.find(channel => channel.name.includes(teamname));
 
@@ -38,8 +38,9 @@ export default {
 		const matchName = matchChannel.name.split(' ');
 		const match = { home: matchName[0], away: matchName[2] };
 
-		const round = await Round.findOne({ matches: { $eq: { home: match.home, away: match.away } } });
-		console.log(round);
+		const round = await Round.findOne({ matches: { $eq: { home: match.home, away: match.away } } })
+			.catch(err => console.error('Find round by match: ', err.message));
+
 		const newGame = {
 			group: round.group,
 			round: round.round,
@@ -50,28 +51,36 @@ export default {
 			labs: args[2],
 		};
 
-		// await Promise.all([Game.create(newGame),
-		// Team.updateTeam(newGame.winner, {
-		// 	group: newGame.group,
-		// 	cups: Number(newGame.cups),
-		// 	abs: Number(newGame.wabs),
-		// 	wins: 1,
-		// 	defeats: 0,
-		// }),
-		// Team.updateTeam(newGame.loser, {
-		// 	group: newGame.group,
-		// 	cups: Number(-newGame.cups),
-		// 	abs: Number(newGame.labs),
-		// 	wins: 0,
-		// 	defeats: 1,
-		// })]).catch(err => console.error(err.message));
+		try {
+			await Game.create(newGame),
+				await Team.updateTeam(newGame.winner, {
+					group: newGame.group,
+					cups: newGame.cups,
+					abs: newGame.wabs,
+					wins: 1,
+					defeats: 0,
+				}),
+				await Team.updateTeam(newGame.loser, {
+					group: newGame.group,
+					cups: -newGame.cups,
+					abs: newGame.labs,
+					wins: 0,
+					defeats: 1,
+				});
+		}
+		catch (err) {
+			err => console.error('Save game an update teams: ', err.message);
+		}
 
-		// await Promise.all([
-		// 	message.channel.send(returnMessage('win', newGame)),
-		// 	message.channel.send(returnEmbedMessage('win'))
-		// 		.then(msg => msg.delete({ timeout: 5000 })),
-		// 	message.channel.send(returnMessage('deleteChannel', matchChannel)),
-		// 	message.guild.channels.cache.get(matchChannel.id).delete(),
-		// ]).catch(err => console.error(err.message));
+		try {
+			await message.channel.send(returnMessage('win', newGame));
+			await message.channel.send(returnEmbedMessage('win'))
+				.then(msg => msg.delete({ timeout: 5000 }));
+			await message.guild.channels.cache.get(matchChannel.id).delete();
+			await message.channel.send(returnMessage('deleteChannel', matchChannel));
+		}
+		catch (error) {
+			err => console.error('Sending result return messages: ', err.message);
+		}
 	},
 };

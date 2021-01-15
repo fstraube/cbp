@@ -10,7 +10,7 @@ const returnMessage = (idf, payload) => {
 		case 'createGroups':
 			return 'Groups';
 		case 'groupsExist':
-			return 'Groups A | B already exists!';
+			return 'Groups `A` | `B` already exists!';
 		case 'startRound':
 			return `Created channel \`${payload.match.home} vs. ${payload.match.away}\`. Please join your channel!`;
 		case 'wrongResult':
@@ -23,7 +23,7 @@ const returnMessage = (idf, payload) => {
 		case 'deleteChannel':
 			return `\`${payload.name}\` channel closed!`;
 		case 'resultExists':
-			return 'result exists. Is there is a problem? ' + adminMsg;
+			return '`#result` exists. Is there a problem? ' + adminMsg;
 		default:
 			return `sorry something went wrong. ${adminMsg}`;
 	}
