@@ -14,7 +14,8 @@
 	"dependencies": {
 		"discord.js": "^12.5.1",
 		"dotenv": "^8.2.0",
-		"mongoose": "^5.11.10"
+		"mongoose": "^5.11.10",
+		"roundrobin": "^1.0.3"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.12.10",

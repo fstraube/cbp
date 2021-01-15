@@ -11,6 +11,8 @@ const returnMessage = (idf, payload) => {
 			return 'there are no teams yet!';
 		case 'errorGroupDraw':
 			return 'something went wrong by drawing groups!';
+		case 'errorRoundRobin':
+			return 'could not create round';
 		case 'groupsExist':
 			return 'Groups `A` | `B` already exists!';
 		case 'startRound':

@@ -44,15 +44,18 @@ const returnEmbedMessage = (idf, payload) => {
 		case 'groupDraw':
 			return new MessageEmbed().setImage('https://media.giphy.com/media/3o6MboNFtQ3bUIAgVi/giphy.gif');
 		case 'createGroups':
-			return new MessageEmbed().addFields(payload.teams.map(team => ({ name: team.teamname, value: `${team.teammembers[0]}, ${team.teammembers[1]}` }))).setThumbnail(payload.group === 'A'
-				? imgGroupA
-				: imgGroupB);
+			return new MessageEmbed().addFields(payload.teams.map(team => ({ name: team.teamname, value: `${team.teammembers[0]}, ${team.teammembers[1]}` })))
+				.setThumbnail(payload.group === 'A'
+					? imgGroupA
+					: imgGroupB);
 		case 'rounds':
 			return new MessageEmbed()
 				.setTitle('Group')
-				.addFields({ name: 'Round 1', value: `\`${payload.rounds.round1[0].home}\` : \`${payload.rounds.round1[0].away}\`\n\`${payload.rounds.round1[1].home}\` : \`${payload.rounds.round1[1].away}\`` },
-					{ name: 'Round 2', value: `\`${payload.rounds.round2[0].home}\` : \`${payload.rounds.round2[0].away}\`\n\`${payload.rounds.round2[1].home}\` : \`${payload.rounds.round2[1].away}\`` },
-					{ name: 'Round 3', value: `\`${payload.rounds.round3[0].home}\` : \`${payload.rounds.round3[0].away}\`\n\`${payload.rounds.round3[1].home}\` : \`${payload.rounds.round3[1].away}\`` })
+				.addFields(
+					payload.rounds.map((round, index) => ({
+						name: `Round ${index + 1}`,
+						value: round.map(match => `\`${match[0]}\` : \`${match[1]}\``),
+					})))
 				.setThumbnail(payload.group === 'A'
 					? imgGroupA
 					: imgGroupB);

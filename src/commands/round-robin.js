@@ -1,73 +1,32 @@
 import models from './../models/index.js';
-const { Group, Round } = models;
+const { Team } = models;
 
 import messages from './../messages/index.js';
-const { returnEmbedMessage } = messages;
+const { returnMessage, returnEmbedMessage } = messages;
 
+import roundRobin from 'roundrobin';
 
 export default {
 	name: 'round-robin',
 	description: 'Create rounds for every group A | B',
 	execute: async (message) => {
 
-		const groupA = await Group.findOne({ group: 'A' });
-		const groupB = await Group.findOne({ group: 'B' });
-		const groups = [groupA, groupB];
+		const groupA = await Team.find({ group: 'A' });
+		const groupB = await Team.find({ group: 'B' });
 
-		const roundsByGroup = groups.map(group => (
-			{
-				round1:
-					[
-						{ home: group.teams[0].teamname, away: group.teams[1].teamname },
-						{ home: group.teams[2].teamname, away: group.teams[3].teamname },
-					],
-				round2:
-					[
-						{ home: group.teams[2].teamname, away: group.teams[0].teamname },
-						{ home: group.teams[3].teamname, away: group.teams[1].teamname },
-					],
-				round3:
-					[
-						{ home: group.teams[3].teamname, away: group.teams[0].teamname },
-						{ home: group.teams[2].teamname, away: group.teams[1].teamname },
-					],
-			}
-		));
+		const teamsA = groupA.map(team => team.teamname);
+		const teamsB = groupB.map(team => team.teamname);
 
-		groups.forEach(async (group) =>
-			await Promise.all([Round.create({
-				group: group.group,
-				round: '1',
-				matches: [
-					{ home: group.teams[0].teamname, away: group.teams[1].teamname },
-					{ home: group.teams[2].teamname, away: group.teams[3].teamname },
-				],
-			}),
-			Round.create({
-				group: group.group,
-				round: '2',
-				matches: [
-					{ home: group.teams[2].teamname, away: group.teams[0].teamname },
-					{ home: group.teams[3].teamname, away: group.teams[1].teamname },
-				],
-			}),
-			Round.create({
-				group: group.group,
-				round: '3',
-				matches: [
-					{ home: group.teams[3].teamname, away: group.teams[0].teamname },
-					{ home: group.teams[2].teamname, away: group.teams[1].teamname },
-				],
-			}),
-			],
-			),
-		);
+		const roundsA = roundRobin(teamsA.length, teamsA);
+		const roundsB = roundRobin(teamsA.length, teamsB);
 
-		const newRoundA = { group: 'A', rounds: roundsByGroup[0] };
-		const newRoundB = { group: 'B', rounds: roundsByGroup[1] };
-
-		await message.channel.send(returnEmbedMessage('rounds', newRoundA));
-		await message.channel.send(returnEmbedMessage('rounds', newRoundB));
-
+		try {
+			await message.channel.send(returnEmbedMessage('rounds', { group: 'A', rounds: roundsA }));
+			await message.channel.send(returnEmbedMessage('rounds', { group: 'B', rounds: roundsB }));
+		}
+		catch (err) {
+			console.error('Error round-robin: ', err.message);
+			return message.reply(returnMessage('errorRoundRobin'));
+		}
 	},
 };
