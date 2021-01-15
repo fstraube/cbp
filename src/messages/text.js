@@ -13,10 +13,14 @@ const returnMessage = (idf, payload) => {
 			return 'something went wrong by drawing groups!';
 		case 'errorRoundRobin':
 			return 'could not create round';
+		case 'errorStartRound':
+			return `could not start round ${payload}`;
 		case 'groupsExist':
 			return 'Groups `A` | `B` already exists!';
 		case 'startRound':
-			return `Created channel \`${payload.match.home} vs. ${payload.match.away}\`. Please join your channel!`;
+			return `Created channel \`${payload.match[0]} vs. ${payload.match[1]}\`. Please join your channel!`;
+		case 'wrongStartRound':
+			return 'This is not a valid number to start a round.';
 		case 'wrongResult':
 			return 'as `#result` I only accept `3` numbers for `#<cups><airballs><opponentAirballs>`!';
 		case 'win':
