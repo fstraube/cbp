@@ -2,11 +2,7 @@ import mongoose from 'mongoose';
 
 export const roundSchema = new mongoose.Schema({
 	group: String,
-	round: Number,
-	matches: {
-		type: [Object],
-		default: undefined,
-	},
+	rounds: Array,
 }, { timestamp: true });
 
 roundSchema.statics.create = async (newRound) => {

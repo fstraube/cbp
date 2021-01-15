@@ -1,5 +1,5 @@
 import models from './../models/index.js';
-const { Team } = models;
+const { Team, Round } = models;
 
 import messages from './../messages/index.js';
 const { returnMessage, returnEmbedMessage } = messages;
@@ -19,6 +19,14 @@ export default {
 
 		const roundsA = roundRobin(teamsA.length, teamsA);
 		const roundsB = roundRobin(teamsA.length, teamsB);
+
+		try {
+			await Round.create({ group: 'A', rounds: roundsA });
+			await Round.create({ group: 'A', rounds: roundsA });
+		}
+		catch (err) {
+			console.error('Error saving rounds: ', err.message);
+		}
 
 		try {
 			await message.channel.send(returnEmbedMessage('rounds', { group: 'A', rounds: roundsA }));
