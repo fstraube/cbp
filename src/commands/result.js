@@ -24,10 +24,11 @@ export default {
 		const team = await Team.findOne({ id: id }).catch(err => console.error('Find team by id: ', err.message));
 		const teamname = team.teamname;
 
-		const channelList = message.guild.channels.cache.map(channel => ({
+		const serverChannels = await message.guild.channels.cache;
+		const channelList = serverChannels.map(channel => ({
 			id: channel.id,
 			name: channel.name,
-		})).catch(err => console.error('Get channels from server: ', err.message));
+		}));
 
 		const matchChannel = channelList.find(channel => channel.name.includes(teamname));
 
@@ -36,53 +37,57 @@ export default {
 		}
 
 		const matchName = matchChannel.name.split(' ');
-		const match = { home: matchName[0], away: matchName[2] };
+		const match = [matchName[0], matchName[2]];
 
-		const round = await Round.findOne({ matches: { $eq: { home: match.home, away: match.away } } })
+		console.log(match);
+
+		const round = await Round.findOne({ 'rounds.0.0': { $elemMatch: { match } } })
 			.catch(err => console.error('Find round by match: ', err.message));
 
-		const newGame = {
-			group: round.group,
-			round: round.round,
-			cups: args[0],
-			winner: teamname,
-			wabs: args[1],
-			loser: (teamname === match.home) ? match.away : match.home,
-			labs: args[2],
-		};
+		console.log(round);
 
-		try {
-			await Game.create(newGame);
-			await Team.updateTeam({ teamname: newGame.winner }, {
-				$inc: {
-					cups: newGame.cups,
-					abs: newGame.wabs,
-					wins: 1,
-					defeats: 0,
-				},
-			});
-			await Team.updateTeam({ teamname: newGame.loser }, {
-				$inc: {
-					cups: newGame.cups,
-					abs: -newGame.wabs,
-					wins: 0,
-					defeats: 1,
-				},
-			});
-		}
-		catch (err) {
-			err => console.error('Save game an update teams: ', err.message);
-		}
+		// const newGame = {
+		// 	group: round.group,
+		// 	round: round.round,
+		// 	cups: args[0],
+		// 	winner: teamname,
+		// 	wabs: args[1],
+		// 	loser: (teamname === match.home) ? match.away : match.home,
+		// 	labs: args[2],
+		// };
 
-		try {
-			await message.channel.send(returnMessage('win', newGame));
-			await message.channel.send(returnEmbedMessage('win'))
-				.then(msg => msg.delete({ timeout: 5000 }));
-			await message.guild.channels.cache.get(matchChannel.id).delete();
-			await message.channel.send(returnMessage('deleteChannel', matchChannel));
-		}
-		catch (error) {
-			err => console.error('Sending result return messages: ', err.message);
-		}
+		// try {
+		// 	await Game.create(newGame);
+		// 	await Team.updateTeam({ teamname: newGame.winner }, {
+		// 		$inc: {
+		// 			cups: newGame.cups,
+		// 			abs: newGame.wabs,
+		// 			wins: 1,
+		// 			defeats: 0,
+		// 		},
+		// 	});
+		// 	await Team.updateTeam({ teamname: newGame.loser }, {
+		// 		$inc: {
+		// 			cups: newGame.cups,
+		// 			abs: -newGame.wabs,
+		// 			wins: 0,
+		// 			defeats: 1,
+		// 		},
+		// 	});
+		// }
+		// catch (err) {
+		// 	err => console.error('Save game an update teams: ', err.message);
+		// }
+
+		// try {
+		// 	await message.channel.send(returnMessage('win', newGame));
+		// 	await message.channel.send(returnEmbedMessage('win'))
+		// 		.then(msg => msg.delete({ timeout: 5000 }));
+		// 	await message.guild.channels.cache.get(matchChannel.id).delete();
+		// 	await message.channel.send(returnMessage('deleteChannel', matchChannel));
+		// }
+		// catch (error) {
+		// 	err => console.error('Sending result return messages: ', err.message);
+		// }
 	},
 };

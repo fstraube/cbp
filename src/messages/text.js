@@ -23,6 +23,8 @@ const returnMessage = (idf, payload) => {
 			return 'This is not a valid number to start a round.';
 		case 'wrongResult':
 			return 'as `#result` I only accept `3` numbers for `#<cups><airballs><opponentAirballs>`!';
+		case 'errorResult':
+			return 'that\'s not possible at the momnet.' + adminMsg;
 		case 'win':
 			return `\`Congratulations!\` Your team \`${payload.winner}\` won ` +
 				`with \`${payload.cups}\` ${payload.cups === '1' ? 'cup' : 'cups'} ` +

@@ -1,5 +1,5 @@
 import models from './../models/index.js';
-const { Team, Round } = models;
+const { Team, Round, Match } = models;
 
 import messages from './../messages/index.js';
 const { returnMessage, returnEmbedMessage } = messages;
@@ -20,13 +20,39 @@ export default {
 		const roundsA = roundRobin(teamsA.length, teamsA);
 		const roundsB = roundRobin(teamsA.length, teamsB);
 
-		try {
-			await Round.create({ group: 'A', rounds: roundsA });
-			await Round.create({ group: 'B', rounds: roundsB });
-		}
-		catch (err) {
-			console.error('Error saving rounds: ', err.message);
-		}
+
+		roundsA.forEach(round => round.forEach((match, index) => Match.create({
+			group: 'A',
+			round: index + 1,
+			home: match[0],
+			away: match[1],
+			cups: 0,
+			winner: null,
+			wab: 0,
+			loser: null,
+			lab: 0,
+		})));
+
+		roundsB.forEach((round, index) => round.forEach((match) => Match.create({
+			group: 'B',
+			round: index + 1,
+			home: match[0],
+			away: match[1],
+			cups: 0,
+			winner: null,
+			wab: 0,
+			loser: null,
+			lab: 0,
+		})));
+
+
+		// try {
+		// 	await Round.create({ group: 'A', rounds: roundsA });
+		// 	await Round.create({ group: 'B', rounds: roundsB });
+		// }
+		// catch (err) {
+		// 	console.error('Error saving rounds: ', err.message);
+		// }
 
 		try {
 			await message.channel.send(returnEmbedMessage('rounds', { group: 'A', rounds: roundsA }));

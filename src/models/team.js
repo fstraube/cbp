@@ -2,25 +2,28 @@ import mongoose from 'mongoose';
 
 export const teamSchema = new mongoose.Schema({
 	id: String,
-	teamname: {
+	name: {
 		type: String,
 		unique: true,
 		required: true,
 	},
-	teammembers: {
+	members: {
 		type: [String],
 		default: undefined,
 	},
 	group: {
 		type: String, default: null,
 	},
-	cups: { type: Number, default: 0 },
-	abs: { type: Number, default: 0 },
-	wins: { type: Number, default: 0 },
-	defeats: { type: Number, default: 0 },
+	stats:
+	{
+		cups: { type: Number, default: 0 },
+		abs: { type: Number, default: 0 },
+		wins: { type: Number, default: 0 },
+		defeats: { type: Number, default: 0 },
+	},
 }, { unique: true, timestamp: true });
 
-teamSchema.statics.create = async (newTeam) => {
+teamSchema.statics.createTeam = async (newTeam) => {
 	const team = new Team(newTeam);
 	return team
 		.save().catch(err => {
