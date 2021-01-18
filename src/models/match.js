@@ -12,12 +12,15 @@ export const matchSchema = new mongoose.Schema({
 	lab: Number,
 }, { unique: true, timestamp: true });
 
-matchSchema.statics.create = async (newMatch) => {
-	const match = new Match(newMatch);
-	return match
-		.save().catch(err => {
-			throw new Error(err);
-		});
+matchSchema.statics.create = async (data) => {
+	try {
+		const newMatch = new Match(data);
+		const match = newMatch.save();
+		return match;
+	}
+	catch (error) {
+		throw new Error(error);
+	}
 };
 
 const Match = mongoose.model('Match', matchSchema);
