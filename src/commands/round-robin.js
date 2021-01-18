@@ -2,20 +2,21 @@ import models from './../models/index.js';
 const { Team, Match } = models;
 
 import answers from './../answers/index.js';
-const { answer, embedAnswer } = answers;
+const { answerError, embedAnswer } = answers;
 
 import roundRobin from 'roundrobin';
 
 export default {
 	name: 'round-robin',
+	aliasses: ['rr'],
 	description: 'Create rounds for every group A | B',
 	execute: async (message) => {
 
 		const groupA = await Team.find({ group: 'A' });
 		const groupB = await Team.find({ group: 'B' });
 
-		const teamsA = groupA.map(team => team.teamname);
-		const teamsB = groupB.map(team => team.teamname);
+		const teamsA = groupA.map(team => team.name);
+		const teamsB = groupB.map(team => team.name);
 
 		const roundsA = roundRobin(teamsA.length, teamsA);
 		const roundsB = roundRobin(teamsA.length, teamsB);
@@ -39,9 +40,8 @@ export default {
 			await message.channel.send(embedAnswer('rounds', { group: 'A', rounds: roundsA }));
 			await message.channel.send(embedAnswer('rounds', { group: 'B', rounds: roundsB }));
 		}
-		catch (err) {
-			console.error('Error round-robin: ', err.message);
-			return message.reply(answer('errorRoundRobin'));
+		catch (error) {
+			return message.reply(answerError('roundRobin', error));
 		}
 	},
 };
