@@ -3,13 +3,13 @@ import mongoose from 'mongoose';
 export const matchSchema = new mongoose.Schema({
 	group: String,
 	round: Number,
-	home: String,
-	away: String,
+	home_team: String,
+	away_team: String,
 	cups: Number,
 	winner: String,
-	wab: Number,
+	wabs: Number,
 	loser: String,
-	lab: Number,
+	labs: Number,
 }, { unique: true, timestamp: true });
 
 matchSchema.statics.create = async (data) => {
