@@ -22,14 +22,14 @@ export default {
 		const roundsB = roundRobin(teamsB.length, teamsB);
 
 		try {
-			roundsA.forEach((round, index) => round.forEach(async match => await Match.create({
+			roundsA.forEach((round, index) => round.forEach(async match => await Match.createMatch({
 				group: 'A',
 				round: index + 1,
 				homeTeam: match[0],
 				awayTeam: match[1],
 			})));
 
-			roundsB.forEach((round, index) => round.forEach(async match => await Match.create({
+			roundsB.forEach((round, index) => round.forEach(async match => await Match.createMatch({
 				group: 'B',
 				round: index + 1,
 				homeTeam: match[0],

@@ -1,4 +1,7 @@
 const answer = (idf, error) => {
+
+	const adminMsg = 'Please contact <@!500727550948147211> or <@!690852668515549196>';
+
 	switch (idf) {
 		case 'createTournament':
 			if (error.message.includes('11000')) {
@@ -15,6 +18,10 @@ const answer = (idf, error) => {
 			return `could not create rounds ${error.message}`;
 		case 'startRound':
 			return 'this is not possible at the moment. No matches exists!';
+		case 'resultEnter':
+			return 'as `#result` I only accept `3` numbers for `#<cups><airballs><opponentAirballs>`!';
+		case 'resultExists':
+			return '`#result` exists. Is there a problem? ' + adminMsg;
 		default:
 			return `Something went wrong: ${error.message}`;
 	}

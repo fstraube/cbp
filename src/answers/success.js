@@ -15,10 +15,6 @@ const answer = (idf, payload) => {
 			return 'Groups `A` | `B` already exists!';
 		case 'startRound':
 			return `Created channel \`${payload.match.homeTeam} vs. ${payload.match.awayTeam}\`. Please join your channel!`;
-		case 'wrongStartRound':
-			return 'This is not a valid number to start a round.';
-		case 'wrongResult':
-			return 'as `#result` I only accept `3` numbers for `#<cups><airballs><opponentAirballs>`!';
 		case 'errorResult':
 			return 'that\'s not possible at the momnet.' + adminMsg;
 		case 'win':
@@ -28,8 +24,6 @@ const answer = (idf, payload) => {
 				`with \`${payload.labs}\` ${payload.labs === '1' ? 'airball' : 'airballs'}!`;
 		case 'deleteChannel':
 			return `\`${payload.name}\` channel closed!`;
-		case 'resultExists':
-			return '`#result` exists. Is there a problem? ' + adminMsg;
 		case 'tables':
 			return 'current table status';
 		default:

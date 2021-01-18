@@ -22,11 +22,31 @@ export const matchSchema = new mongoose.Schema({
 	},
 }, { unique: true, timestamp: true });
 
-matchSchema.statics.create = async (data) => {
+matchSchema.statics.createMatch = async (data) => {
 	try {
 		const newMatch = new Match(data);
 		const match = newMatch.save();
 		return match;
+	}
+	catch (error) {
+		throw new Error(error);
+	}
+};
+matchSchema.statics.updateMatch = async (homeTeam, awayTeam, updateData) => {
+	try {
+		const match = await Match.findOne({ $and: [{ homeTeam, awayTeam }] });
+		if (match.winner === null && match.loser === null) {
+			match.cups = updateData.cups;
+			match.winner = updateData.winner;
+			match.wabs = updateData.wabs;
+			match.loser = updateData.loser;
+			match.labs = updateData.labs;
+			const updatedMatch = await match.save();
+			return updatedMatch;
+		}
+		else {
+			throw new Error('result exists');
+		}
 	}
 	catch (error) {
 		throw new Error(error);
