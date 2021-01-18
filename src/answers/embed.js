@@ -20,7 +20,7 @@ const returnEmbedMessage = (idf, payload) => {
 	const rndWinGif = Math.floor(Math.random() * winGifs.length);
 
 	switch (idf) {
-		case 'createdTeamSuccess':
+		case 'createTeam':
 			return new MessageEmbed()
 				.setTitle(`Team: ${payload.name}`)
 				.addFields({
@@ -43,7 +43,7 @@ const returnEmbedMessage = (idf, payload) => {
 				).setThumbnail('https://media.giphy.com/media/xT5LMGupUKCHb7DnFu/giphy.gif');
 		case 'groupDraw':
 			return new MessageEmbed().setImage('https://media.giphy.com/media/3o6MboNFtQ3bUIAgVi/giphy.gif');
-		case 'createGroups':
+		case 'createGroup':
 			return new MessageEmbed().addFields(payload.teams.map(team => ({ name: team.name, value: `${team.members[0]}, ${team.members[1]}` })))
 				.setThumbnail(payload.group === 'A'
 					? imgGroupA

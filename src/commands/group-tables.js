@@ -2,7 +2,7 @@ import models from './../models/index.js';
 const { Team } = models;
 
 import answers from './../answers/index.js';
-const { answer, embedAnswer } = answers;
+const { answerSuccess, embedAnswer } = answers;
 
 export default {
 	name: 'group-tables',
@@ -24,7 +24,7 @@ export default {
 		// await Group.create(newGroupA).catch(err => console.error(err.message));
 		// const newGroupB = { group: 'B', teams: teamsGroupB };
 		// await Group.create(newGroupB).catch(err => console.error(err.message));
-
+		await message.channel.send(answerSuccess('tables'));
 		await message.channel.send(embedAnswer('tables', { group: 'A', table: tableGroupA }));
 		await message.channel.send(embedAnswer('tables', { group: 'B', table: tableGroupB }));
 	},

@@ -7,12 +7,6 @@ const answer = (idf, payload) => {
 			return `Tournament \`${payload.name}\` with \`${payload.teamsCount}\` teams in \`${payload.groupsCount}\` groups, was created successfully!`;
 		case 'missingTeammember':
 			return `your team \`${payload}\` needs a \`member\`. The proper usage would be: \`/create-team <teamname> <teammember> as @mention\``;
-		case 'createdTeamError':
-			return `your team \`${payload}\` already exists. ${adminMsg}`;
-		case 'noTeams':
-			return 'there are no teams yet!';
-		case 'errorGroupDraw':
-			return 'something went wrong by drawing groups!';
 		case 'errorRoundRobin':
 			return 'could not create round';
 		case 'errorStartRound':

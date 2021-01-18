@@ -24,35 +24,16 @@ export default {
 		roundsA.forEach(round => round.forEach((match, index) => Match.create({
 			group: 'A',
 			round: index + 1,
-			home: match[0],
-			away: match[1],
-			cups: 0,
-			winner: null,
-			wab: 0,
-			loser: null,
-			lab: 0,
+			homeTeam: match[0],
+			awayTeam: match[1],
 		})));
 
 		roundsB.forEach((round, index) => round.forEach((match) => Match.create({
 			group: 'B',
 			round: index + 1,
-			home: match[0],
-			away: match[1],
-			cups: 0,
-			winner: null,
-			wab: 0,
-			loser: null,
-			lab: 0,
+			homeTeam: match[0],
+			awayTeam: match[1],
 		})));
-
-
-		// try {
-		// 	await Round.create({ group: 'A', rounds: roundsA });
-		// 	await Round.create({ group: 'B', rounds: roundsB });
-		// }
-		// catch (err) {
-		// 	console.error('Error saving rounds: ', err.message);
-		// }
 
 		try {
 			await message.channel.send(embedAnswer('rounds', { group: 'A', rounds: roundsA }));
