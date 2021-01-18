@@ -23,20 +23,25 @@ export const teamSchema = new mongoose.Schema({
 	},
 }, { unique: true, timestamp: true });
 
-teamSchema.statics.createTeam = async (newTeam) => {
-	const team = new Team(newTeam);
-	return team
-		.save().catch(err => {
-			throw new Error(err);
-		});
+teamSchema.statics.createTeam = async (data) => {
+	try {
+		const newTeam = new Team(data);
+		const team = await newTeam.save();
+		return team;
+	}
+	catch (error) {
+		throw new Error(error);
+	}
 };
 
-teamSchema.statics.updateTeam = async (teamname, updateData) => {
-	const updatedTeam = await Team.updateOne(teamname, updateData).catch(err => {
-		throw new Error(err);
-	});
-
-	return updatedTeam;
+teamSchema.statics.updateTeam = async (name, updateData) => {
+	try {
+		const updatedTeam = await Team.updateOne(name, updateData);
+		return updatedTeam;
+	}
+	catch (error) {
+		throw new Error(error);
+	}
 };
 
 const Team = mongoose.model('Team', teamSchema);
