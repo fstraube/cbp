@@ -22,8 +22,11 @@ const answer = (idf, error) => {
 			return 'as `#result` I only accept `3` numbers for `#<cups><airballs><opponentAirballs>`!';
 		case 'resultExists':
 			return '`#result` exists. Is there a problem? ' + adminMsg;
+		case 'result':
+			return `result error: ${error.message}`;
+
 		default:
-			return `Something went wrong: ${error.message}`;
+			return `something went wrong: ${error.message}`;
 	}
 };
 export default answer;

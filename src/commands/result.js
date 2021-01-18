@@ -2,7 +2,7 @@ import models from './../models/index.js';
 const { Team, Match } = models;
 
 import answers from './../answers/index.js';
-const { answerError, embedAnswer } = answers;
+const { answerError, answerSuccess, embedAnswer } = answers;
 
 export default {
 	name: 'result',
@@ -40,7 +40,7 @@ export default {
 		const homeTeam = matchName[0];
 		const awayTeam = matchName[2];
 
-		const updateMatch = {
+		const updateStats = {
 			cups: args[0],
 			winner: teamname,
 			wabs: args[1],
@@ -49,16 +49,16 @@ export default {
 		};
 
 		try {
-			// await Match.updateMatch(homeTeam, awayTeam, updateMatch);
-			await Team.updateTeam({ name: updateMatch.winner }, {
-				cups: Number(updateMatch.cups),
-				abs: Number(updateMatch.wabs),
+			await Match.updateMatch(homeTeam, awayTeam, updateStats);
+			await Team.updateTeam({ name: updateStats.winner }, {
+				cups: Number(updateStats.cups),
+				abs: Number(updateStats.wabs),
 				wins: 1,
 				defeats: 0,
 			});
-			await Team.updateTeam({ name: updateMatch.loser }, {
-				cups: Number(-updateMatch.cups),
-				abs: Number(updateMatch.labs),
+			await Team.updateTeam({ name: updateStats.loser }, {
+				cups: Number(-updateStats.cups),
+				abs: Number(updateStats.labs),
 				wins: 0,
 				defeats: 1,
 			});
@@ -68,15 +68,15 @@ export default {
 			return message.reply(answerError('resultExists'));
 		}
 
-		// try {
-		// 	await message.channel.send(answer('win', newGame));
-		// 	await message.channel.send(returnEmbedMessage('win'))
-		// 		.then(msg => msg.delete({ timeout: 5000 }));
-		// 	await message.guild.channels.cache.get(matchChannel.id).delete();
-		// 	await message.channel.send(answer('deleteChannel', matchChannel));
-		// }
-		// catch (error) {
-		// 	err => console.error('Sending result return messages: ', err.message);
-		// }
+		try {
+			await message.channel.send(answerSuccess('win', updateStats));
+			await message.channel.send(embedAnswer('win'))
+				.then(msg => msg.delete({ timeout: 5000 }));
+			await message.guild.channels.cache.get(matchChannel.id).delete();
+			await message.channel.send(answerSuccess('deleteChannel', matchChannel));
+		}
+		catch (error) {
+			return message.channel.send(answerError('result'), error);
+		}
 	},
 };
