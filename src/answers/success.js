@@ -14,7 +14,7 @@ const answer = (idf, payload) => {
 		case 'groupsExist':
 			return 'Groups `A` | `B` already exists!';
 		case 'startRound':
-			return `Created channel \`${payload.match[0]} vs. ${payload.match[1]}\`. Please join your channel!`;
+			return `Created channel \`${payload.match.homeTeam} vs. ${payload.match.awayTeam}\`. Please join your channel!`;
 		case 'wrongStartRound':
 			return 'This is not a valid number to start a round.';
 		case 'wrongResult':

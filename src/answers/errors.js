@@ -13,6 +13,8 @@ const answer = (idf, error) => {
 			return 'something went wrong by drawing groups!';
 		case 'roundRobin':
 			return `could not create rounds ${error.message}`;
+		case 'startRound':
+			return 'this is not possible at the moment. No matches exists!';
 		default:
 			return `Something went wrong: ${error.message}`;
 	}
