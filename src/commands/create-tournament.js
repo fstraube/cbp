@@ -2,7 +2,7 @@ import models from './../models/index.js';
 const { Tournament } = models;
 
 import answers from './../answers/index.js';
-const { answer, embedAnswer } = answers;
+const { answer, answerError, embedAnswer } = answers;
 
 export default {
 	name: 'create-tournament',
@@ -20,15 +20,15 @@ export default {
 			return message.author.send('Please enter <tornament_name> <teams_count> <groups_count>');
 		}
 
-		const tournament = {
+		const data = {
 			name, teams_count, groups_count, finished: false,
 		};
 
 		try {
-			await Tournament.createTournament(tournament);
+			const tournament = await Tournament.createTournament(data);
 		}
 		catch (error) {
-			return message.author.send(answer('errorCreateTournament'));
+			return message.author.send(answerError('createTournament', error));
 		}
 
 	},

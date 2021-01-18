@@ -1,6 +1,7 @@
-import returnMessage from './text.js';
-import returnEmbedMessage from './embed.js';
+import answer from './text.js';
+import answerError from './errors.js';
+import embedAnswer from './embed.js';
 
-const messages = { returnMessage, returnEmbedMessage };
+const answers = { answer, answerError, embedAnswer };
 
-export default messages;
+export default answers;

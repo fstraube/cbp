@@ -9,6 +9,9 @@ export const tournamentSchema = new mongoose.Schema({
 		type: Array, default: [],
 	},
 	groups_count: Number,
+	finished: {
+		type: Boolean, default: false,
+	},
 }, { timestamp: true });
 
 tournamentSchema.statics.createTournament = async (data) => {
