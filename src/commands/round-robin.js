@@ -1,8 +1,8 @@
 import models from './../models/index.js';
 const { Team, Round, Match } = models;
 
-import messages from './../messages/index.js';
-const { returnMessage, returnEmbedMessage } = messages;
+import answers from './../answers/index.js';
+const { answer, embedAnswer } = answers;
 
 import roundRobin from 'roundrobin';
 
@@ -55,12 +55,12 @@ export default {
 		// }
 
 		try {
-			await message.channel.send(returnEmbedMessage('rounds', { group: 'A', rounds: roundsA }));
-			await message.channel.send(returnEmbedMessage('rounds', { group: 'B', rounds: roundsB }));
+			await message.channel.send(embedAnswer('rounds', { group: 'A', rounds: roundsA }));
+			await message.channel.send(embedAnswer('rounds', { group: 'B', rounds: roundsB }));
 		}
 		catch (err) {
 			console.error('Error round-robin: ', err.message);
-			return message.reply(returnMessage('errorRoundRobin'));
+			return message.reply(answer('errorRoundRobin'));
 		}
 	},
 };

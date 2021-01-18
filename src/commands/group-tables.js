@@ -1,8 +1,8 @@
 import models from './../models/index.js';
 const { Team } = models;
 
-import messages from './../messages/index.js';
-const { returnEmbedMessage } = messages;
+import answers from './../answers/index.js';
+const { answer, embedAnswer } = answers;
 
 export default {
 	name: 'group-tables',
@@ -25,7 +25,7 @@ export default {
 		// const newGroupB = { group: 'B', teams: teamsGroupB };
 		// await Group.create(newGroupB).catch(err => console.error(err.message));
 
-		await message.channel.send(returnEmbedMessage('tables', { group: 'A', table: tableGroupA }));
-		await message.channel.send(returnEmbedMessage('tables', { group: 'B', table: tableGroupB }));
+		await message.channel.send(embedAnswer('tables', { group: 'A', table: tableGroupA }));
+		await message.channel.send(embedAnswer('tables', { group: 'B', table: tableGroupB }));
 	},
 };

@@ -1,8 +1,8 @@
 import models from './../models/index.js';
 const { Team, Round, Game } = models;
 
-import messages from './../messages/index.js';
-const { returnMessage, returnEmbedMessage } = messages;
+import answers from './../answers/index.js';
+const { answer, embedAnswer } = answers;
 
 export default {
 	name: 'result',
@@ -16,7 +16,7 @@ export default {
 		const labs = Number(args[2]);
 
 		if (isNaN(cups) || isNaN(wabs) || isNaN(labs) || args.length !== 3) {
-			return message.reply(returnMessage('wrongResult'));
+			return message.reply(answer('wrongResult'));
 		}
 
 		const user = message.author;
@@ -33,7 +33,7 @@ export default {
 		const matchChannel = channelList.find(channel => channel.name.includes(teamname));
 
 		if (!matchChannel) {
-			return message.reply(returnMessage('resultExists'));
+			return message.reply(answer('resultExists'));
 		}
 
 		const matchName = matchChannel.name.split(' ');
@@ -80,11 +80,11 @@ export default {
 		// }
 
 		// try {
-		// 	await message.channel.send(returnMessage('win', newGame));
+		// 	await message.channel.send(answer('win', newGame));
 		// 	await message.channel.send(returnEmbedMessage('win'))
 		// 		.then(msg => msg.delete({ timeout: 5000 }));
 		// 	await message.guild.channels.cache.get(matchChannel.id).delete();
-		// 	await message.channel.send(returnMessage('deleteChannel', matchChannel));
+		// 	await message.channel.send(answer('deleteChannel', matchChannel));
 		// }
 		// catch (error) {
 		// 	err => console.error('Sending result return messages: ', err.message);

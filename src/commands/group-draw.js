@@ -1,8 +1,8 @@
 import models from './../models/index.js';
 const { Team } = models;
 
-import messages from './../messages/index.js';
-const { returnMessage, returnEmbedMessage } = messages;
+import answers from './../answers/index.js';
+const { answer, embedAnswer } = answers;
 
 export default {
 	name: 'group-draw',
@@ -13,7 +13,7 @@ export default {
 		const teams = await Team.find({});
 
 		if (!teams && teams.length === 0) {
-			return message.reply(returnMessage('noTeams'));
+			return message.reply(answer('noTeams'));
 		}
 
 		const shuffleTeams = (array) => {
@@ -38,14 +38,14 @@ export default {
 		const groupB = await Team.find({ group: 'B' });
 
 		try {
-			await message.channel.send(returnEmbedMessage('groupDraw'))
+			await message.channel.send(embedAnswer('groupDraw'))
 				.then(msg => msg.delete({ timeout: 5000 }));
-			await message.channel.send(returnEmbedMessage('createGroups', { group: 'A', teams: groupA }));
-			await message.channel.send(returnEmbedMessage('createGroups', { group: 'B', teams: groupB }));
+			await message.channel.send(embedAnswer('createGroups', { group: 'A', teams: groupA }));
+			await message.channel.send(embedAnswer('createGroups', { group: 'B', teams: groupB }));
 		}
 		catch (err) {
 			console.error('Group draw error: ', err.message);
-			message.reply(returnMessage('errorGroupDraw'));
+			message.reply(answer('errorGroupDraw'));
 		}
 	},
 };

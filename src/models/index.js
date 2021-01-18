@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
+import Tournament from './tournament.js';
 import Team from './team.js';
-import Round from './round.js';
 import Match from './match.js';
 
 const dbOptions = {
@@ -15,7 +15,7 @@ const connectDb = () => {
 	return mongoose.connect(process.env.DB_CONNECTION_TOURNAMENT, dbOptions);
 };
 
-const models = { Team, Round, Match };
+const models = { Team, Tournament, Match };
 
 export { connectDb };
 

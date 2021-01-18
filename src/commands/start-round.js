@@ -1,8 +1,8 @@
 import models from './../models/index.js';
 const { Round } = models;
 
-import messages from './../messages/index.js';
-const { returnMessage } = messages;
+import answers from './../answers/index.js';
+const { answer, embedAnswer } = answers;
 
 export default {
 	name: 'start-round',
@@ -14,7 +14,7 @@ export default {
 		const n = args[0];
 
 		if (isNaN(n) || n.length !== 1) {
-			return message.reply(returnMessage('wrongStartRound'));
+			return message.reply(answer('wrongStartRound'));
 		}
 
 		const allRoundsByGroup = await Round.find();
@@ -22,10 +22,10 @@ export default {
 		allRoundsByGroup.forEach(group =>
 			group.rounds[n - 1].forEach(async match => (
 				await Promise.all([message.guild.channels.create(`${match[0]} vs. ${match[1]}`, { type: 'voice', reason: `Round ${n}` }),
-				message.channel.send(returnMessage('startRound', { round: n, match }))])
+				message.channel.send(answer('startRound', { round: n, match }))])
 					.catch(err => {
 						console.error(`Error starting round ${n}: `, err.message);
-						return message.reply(returnMessage('errorStartRound', n));
+						return message.reply(answer('errorStartRound', n));
 					},
 					)
 			)),

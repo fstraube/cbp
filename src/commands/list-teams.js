@@ -1,8 +1,8 @@
 import models from './../models/index.js';
 const { Team } = models;
 
-import messages from './../messages/index.js';
-const { returnEmbedMessage } = messages;
+import answers from './../answers/index.js';
+const { answer, embedAnswer } = answers;
 
 export default {
 	name: 'list-teams',
@@ -10,6 +10,6 @@ export default {
 	description: 'show all registrated teams',
 	execute: async (message) => {
 		const teams = await Team.find({});
-		message.channel.send(returnEmbedMessage('listTeams', teams));
+		message.channel.send(embedAnswer('listTeams', teams));
 	},
 };

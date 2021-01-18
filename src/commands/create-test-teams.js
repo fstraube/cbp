@@ -1,7 +1,7 @@
 import models from './../models/index.js';
 const { Team } = models;
-import messages from './../messages/index.js';
-const { returnMessage, returnEmbedMessage } = messages;
+import answers from './../answers/index.js';
+const { answer, embedAnswer } = answers;
 
 export default {
 	name: 'create-test-teams',
@@ -42,10 +42,10 @@ export default {
 				teammembers,
 			};
 			Team.create(newTeam).then(team => {
-				return message.channel.send(returnEmbedMessage('createdTeamSuccess', team));
+				return message.channel.send(embedAnswer('createdTeamSuccess', team));
 			}).catch(err => {
 				console.error(err.message);
-				return message.author.send(returnMessage('createdTeamError', teamname));
+				return message.author.send(answer('createdTeamError', teamname));
 			});
 		}
 	},
