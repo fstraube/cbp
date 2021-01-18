@@ -3,13 +3,23 @@ import mongoose from 'mongoose';
 export const matchSchema = new mongoose.Schema({
 	group: String,
 	round: Number,
-	home_team: String,
-	away_team: String,
-	cups: Number,
-	winner: String,
-	wabs: Number,
-	loser: String,
-	labs: Number,
+	homeTeam: String,
+	awayTeam: String,
+	cups: {
+		type: Number, default: 0,
+	},
+	winner: {
+		type: String, default: null,
+	},
+	wabs: {
+		type: Number, default: 0,
+	},
+	loser: {
+		type: String, default: null,
+	},
+	labs: {
+		type: Number, default: 0,
+	},
 }, { unique: true, timestamp: true });
 
 matchSchema.statics.create = async (data) => {

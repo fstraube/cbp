@@ -4,11 +4,11 @@ export const tournamentSchema = new mongoose.Schema({
 	name: {
 		type: String, unique: true,
 	},
-	teams_count: Number,
+	teamsCount: Number,
 	teams: {
 		type: Array, default: [],
 	},
-	groups_count: Number,
+	groupsCount: Number,
 	finished: {
 		type: Boolean, default: false,
 	},

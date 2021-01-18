@@ -1,8 +1,10 @@
-const returnMessage = (idf, payload) => {
+const answer = (idf, payload) => {
 
 	const adminMsg = 'Please contact <@!500727550948147211> or <@!690852668515549196>';
 
 	switch (idf) {
+		case 'createTournament':
+			return `Tournament \`${payload.name}\` with \`${payload.teamsCount}\` teams in \`${payload.groupsCount}\` groups, was created successfully!`;
 		case 'missingTeammember':
 			return `your team \`${payload}\` needs a \`member\`. The proper usage would be: \`/create-team <teamname> <teammember> as @mention\``;
 		case 'createdTeamError':
@@ -34,8 +36,10 @@ const returnMessage = (idf, payload) => {
 			return `\`${payload.name}\` channel closed!`;
 		case 'resultExists':
 			return '`#result` exists. Is there a problem? ' + adminMsg;
+		case 'tables':
+			return 'current table status';
 		default:
 			return `sorry something went wrong. ${adminMsg}`;
 	}
 };
-export default returnMessage;
+export default answer;

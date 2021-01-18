@@ -1,5 +1,4 @@
 const answer = (idf, error) => {
-	console.log(error);
 	switch (idf) {
 		case 'createTournament':
 			if (error.message.includes('11000')) {

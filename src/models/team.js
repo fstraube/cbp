@@ -16,10 +16,18 @@ export const teamSchema = new mongoose.Schema({
 	},
 	stats:
 	{
-		cups: { type: Number, default: 0 },
-		abs: { type: Number, default: 0 },
-		wins: { type: Number, default: 0 },
-		defeats: { type: Number, default: 0 },
+		cups: {
+			type: Number, default: 0,
+		},
+		abs: {
+			type: Number, default: 0,
+		},
+		wins: {
+			type: Number, default: 0,
+		},
+		defeats: {
+			type: Number, default: 0,
+		},
 	},
 }, { unique: true, timestamp: true });
 

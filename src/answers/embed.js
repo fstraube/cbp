@@ -22,14 +22,14 @@ const returnEmbedMessage = (idf, payload) => {
 	switch (idf) {
 		case 'createdTeamSuccess':
 			return new MessageEmbed()
-				.setTitle(`Team: ${payload.teamname}`)
+				.setTitle(`Team: ${payload.name}`)
 				.addFields({
 					name: 'Member 1',
-					value: payload.teammembers[0],
+					value: payload.members[0],
 					inline: true,
 				}, {
 					name: 'Member 2',
-					value: payload.teammembers[1],
+					value: payload.members[1],
 					inline: true,
 				});
 		case 'listTeams':
@@ -37,14 +37,14 @@ const returnEmbedMessage = (idf, payload) => {
 				.setTitle('Teams:')
 				.addFields(payload.map(team => (
 					{
-						name: `${team.teamname}`,
-						value: `${team.teammembers[0]} | ${team.teammembers[1]}`,
+						name: `${team.name}`,
+						value: `${team.members[0]} | ${team.members[1]}`,
 					})),
 				).setThumbnail('https://media.giphy.com/media/xT5LMGupUKCHb7DnFu/giphy.gif');
 		case 'groupDraw':
 			return new MessageEmbed().setImage('https://media.giphy.com/media/3o6MboNFtQ3bUIAgVi/giphy.gif');
 		case 'createGroups':
-			return new MessageEmbed().addFields(payload.teams.map(team => ({ name: team.teamname, value: `${team.teammembers[0]}, ${team.teammembers[1]}` })))
+			return new MessageEmbed().addFields(payload.teams.map(team => ({ name: team.name, value: `${team.members[0]}, ${team.members[1]}` })))
 				.setThumbnail(payload.group === 'A'
 					? imgGroupA
 					: imgGroupB);
@@ -59,13 +59,29 @@ const returnEmbedMessage = (idf, payload) => {
 				.setThumbnail(payload.group === 'A'
 					? imgGroupA
 					: imgGroupB);
+		case 'sfs':
+			return new MessageEmbed()
+				.setTitle('Semifinals:')
+				.addFields(
+					payload.rounds.map((round, index) => ({
+						name: `Semifinal ${index + 1}`,
+						value: `\`${round.homeTeam}\` : \`${round.awayTeam}\``,
+					})));
+		case 'fs':
+			return new MessageEmbed()
+				.setTitle('Finals:')
+				.addFields(
+					payload.rounds.map((round, index) => ({
+						name: `Final ${index + 1}`,
+						value: `\`${round.homeTeam}\` : \`${round.awayTeam}\``,
+					})));
 		case 'win':
 			return new MessageEmbed().setImage(winGifs[rndWinGif]);
 		case 'tables':
 			return new MessageEmbed()
 				.setTitle('Group')
 				.setDescription('| Wins | Losses | Cups | Airballs |')
-				.addFields(payload.table.map(team => ({ name: team.teamname, value: `| ${team.wins} |  ${team.defeats} | ${team.cups} | ${team.abs} |` })))
+				.addFields(payload.table.map((team, index) => ({ name: `${index + 1}. ${team.name}`, value: `| ${team.stats.wins} |  ${team.stats.defeats} | ${team.stats.cups} | ${team.stats.abs} |` })))
 				.setThumbnail(payload.group === 'A'
 					? imgGroupA
 					: imgGroupB);

@@ -1,5 +1,5 @@
 import models from './../models/index.js';
-const { Team, Round, Match } = models;
+const { Team, Match } = models;
 
 import answers from './../answers/index.js';
 const { answer, embedAnswer } = answers;
