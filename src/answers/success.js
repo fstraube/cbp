@@ -5,6 +5,8 @@ const answer = (idf, payload) => {
 	switch (idf) {
 		case 'newTournament':
 			return 'Let\'s get ready to **RUMBLE...**!';
+		case 'pickTeammate':
+			return 'Pick an awesome `teamname` and select your teammate vie `@mention` like `/createTeam teamname @mention`';
 		case 'createTournament':
 			return `Tournament \`${payload.name}\` with \`${payload.teamsCount}\` teams in \`${payload.groupsCount}\` groups, was created successfully!`;
 		case 'missingTeammember':
