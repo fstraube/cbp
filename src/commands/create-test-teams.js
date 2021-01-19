@@ -5,6 +5,7 @@ const { answerError, embedAnswer } = answers;
 
 export default {
 	name: 'create-test-teams',
+	aliases: ['ctt'],
 	description: 'Create test teams by <number>',
 	usage: '<number> count of test teams',
 	args: true,
@@ -25,14 +26,21 @@ export default {
 				const guildMembers = await message.guild.members.fetch()
 					.catch(error => console.error(error));
 
+				const memberUserObjects = guildMembers.map(member =>
+					member.user);
 
-				const memberUserObjects = [];
-				guildMembers.map(member => memberUserObjects.push(member.user));
+				const title = ['König', 'Prinz', 'Graf', 'Lord', 'Herzog', 'Freiherr', 'Baron', 'Ritter', 'Junker'];
+				const of = ['Pimmel', 'Sack', 'Arsch', 'Hoden', 'Stolch', 'Lörres', 'Penis', 'Kimme', 'Smegma'];
+				const body = ['Kopf', 'Haar', 'Gesicht', 'Nase', 'Mund', 'Ohr', 'Auge', 'Lippe', 'Stirn'];
+
+				const rndTitle = Math.floor(Math.random() * title.length);
+				const rndOf = Math.floor(Math.random() * title.length);
+				const rndBody = Math.floor(Math.random() * title.length);
 
 				const rndX = Math.floor(Math.random() * memberUserObjects.length);
 				const rndY = Math.floor(Math.random() * memberUserObjects.length);
 
-				name = `Team${i}`;
+				name = `${title[rndTitle]}_${of[rndOf]}_${body[rndBody]}`;
 				id = memberUserObjects[rndX].id + (memberUserObjects[rndY].id);
 				members.push(memberUserObjects[rndX]);
 				members.push(memberUserObjects[rndY]);

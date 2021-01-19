@@ -50,13 +50,13 @@ export default {
 
 		try {
 			await Match.updateMatch(homeTeam, awayTeam, updateStats);
-			await Team.updateTeam({ name: updateStats.winner }, {
+			await Team.updateTeamStats({ name: updateStats.winner }, {
 				cups: Number(updateStats.cups),
 				abs: Number(updateStats.wabs),
 				wins: 1,
 				defeats: 0,
 			});
-			await Team.updateTeam({ name: updateStats.loser }, {
+			await Team.updateTeamStats({ name: updateStats.loser }, {
 				cups: Number(-updateStats.cups),
 				abs: Number(updateStats.labs),
 				wins: 0,

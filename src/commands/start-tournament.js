@@ -9,7 +9,7 @@ export default {
 		await message.channel.send(answerSuccess('newTournament'));
 		await message.channel.send(embedAnswer('newTournament'))
 			.then(msg => {
-				msg.delete({ timeout: 10000 }).then(async () => {
+				msg.delete({ timeout: 5000 }).then(async () => {
 					await message.channel.send(embedAnswer('pickTeammate'));
 					await message.channel.send(answerSuccess('pickTeammate'));
 				});
