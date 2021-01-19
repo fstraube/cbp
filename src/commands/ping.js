@@ -4,6 +4,6 @@ export default {
 	execute: (message) => {
 		return message
 			.channel
-			.send('Pong.');
+			.send('```diff\n+green\n-red\n```');
 	},
 };

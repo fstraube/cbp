@@ -20,10 +20,6 @@ export default {
 			return b.wins - a.wins || b.cups - a.cups || a.airballs - b.airballs;
 		});
 
-		// const newGroupA = { group: 'A', teams: teamsGroupA };
-		// await Group.create(newGroupA).catch(err => console.error(err.message));
-		// const newGroupB = { group: 'B', teams: teamsGroupB };
-		// await Group.create(newGroupB).catch(err => console.error(err.message));
 		await message.channel.send(answerSuccess('tables'));
 		await message.channel.send(embedAnswer('tables', { group: 'A', table: tableGroupA }));
 		await message.channel.send(embedAnswer('tables', { group: 'B', table: tableGroupB }));

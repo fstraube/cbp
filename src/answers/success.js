@@ -3,6 +3,8 @@ const answer = (idf, payload) => {
 	const adminMsg = 'Please contact <@!500727550948147211> or <@!690852668515549196>';
 
 	switch (idf) {
+		case 'newTournament':
+			return 'Let\'s get ready to **RUMBLE...**!';
 		case 'createTournament':
 			return `Tournament \`${payload.name}\` with \`${payload.teamsCount}\` teams in \`${payload.groupsCount}\` groups, was created successfully!`;
 		case 'missingTeammember':
@@ -26,6 +28,8 @@ const answer = (idf, payload) => {
 			return `\`${payload.name}\` channel closed!`;
 		case 'startSemifinals':
 			return `Created channel \`${payload.match.homeTeam} vs. ${payload.match.awayTeam}\`. Please join your channel!`;
+		case 'startFinals':
+			return `Created channel **${payload.match.group}:** \`${payload.match.homeTeam} vs. ${payload.match.awayTeam}\`. Please join your channel!`;
 		case 'tables':
 			return 'current table status';
 		default:

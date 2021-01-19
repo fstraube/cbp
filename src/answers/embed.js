@@ -19,7 +19,13 @@ const returnEmbedMessage = (idf, payload) => {
 
 	const rndWinGif = Math.floor(Math.random() * winGifs.length);
 
+	const rumble = 'https://media.giphy.com/media/3aGZA6WLI9Jde/giphy.gif';
+
 	switch (idf) {
+		case 'newTournament':
+			return new MessageEmbed().setImage(rumble);
+		case 'pickTeammate':
+			return new MessageEmbed().setImage('https://media.giphy.com/media/xT5LMGupUKCHb7DnFu/giphy.gif');
 		case 'createTeam':
 			return new MessageEmbed()
 				.setTitle(`Team: ${payload.name}`)
@@ -40,7 +46,7 @@ const returnEmbedMessage = (idf, payload) => {
 						name: `${team.name}`,
 						value: `${team.members[0]} | ${team.members[1]}`,
 					})),
-				).setThumbnail('https://media.giphy.com/media/xT5LMGupUKCHb7DnFu/giphy.gif');
+				);
 		case 'groupDraw':
 			return new MessageEmbed().setImage('https://media.giphy.com/media/3o6MboNFtQ3bUIAgVi/giphy.gif');
 		case 'createGroup':
