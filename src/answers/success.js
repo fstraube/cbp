@@ -24,6 +24,8 @@ const answer = (idf, payload) => {
 				`with \`${payload.labs}\` ${payload.labs === '1' ? 'airball' : 'airballs'}!`;
 		case 'deleteChannel':
 			return `\`${payload.name}\` channel closed!`;
+		case 'startSemifinals':
+			return `Created channel \`${payload.match.homeTeam} vs. ${payload.match.awayTeam}\`. Please join your channel!`;
 		case 'tables':
 			return 'current table status';
 		default:
