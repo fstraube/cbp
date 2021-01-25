@@ -5,8 +5,7 @@
 	"type": "module",
 	"main": "bot.js",
 	"scripts": {
-		"start": "nodemon --exec babel-node src/bot.js --experimental-json-modules",
-		"test": "jest"
+		"start": "nodemon --exec babel-node src/bot.js --experimental-json-modules"
 	},
 	"keywords": [],
 	"author": "",
@@ -14,26 +13,14 @@
 	"dependencies": {
 		"discord.js": "^12.5.1",
 		"dotenv": "^8.2.0",
-		"mongoose": "^5.11.10",
+		"mongoose": "^5.11.13",
 		"roundrobin": "^1.0.3"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.12.10",
 		"@babel/node": "^7.12.10",
+		"@babel/plugin-transform-runtime": "^7.12.10",
 		"@babel/preset-env": "^7.12.11",
-		"jest": "^26.6.3"
-	},
-	"jest": {
-		"testEnvironment": "node",
-		"testEnvironmentOptions": {
-			"testGuildId": "795317900864913479"
-		},
-		"globalSetup": "./__tests__/test.global.js",
-		"setupFilesAfterEnv": [
-			"./__tests__/bot.test.js"
-		],
-		"roots": [
-			"src/"
-		]
+		"@babel/runtime": "^7.12.5"
 	}
 }

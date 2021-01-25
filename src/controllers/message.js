@@ -1,23 +1,23 @@
-import Discord from 'discord.js';
-const client = new Discord.Client();
-client.commands = new Discord.Collection();
+import { Collection } from 'discord.js';
+
 import config from './../config.js';
 const { prefix } = config;
 import commands from './../commands/index.js';
 
-commands.map(command => {
-	client.commands.set(command.name, command);
-});
+export const messageController = async (message) => {
 
+	message.client.commands = new Collection();
 
-const messageController = (message) => {
+	commands.map(command => {
+		message.client.commands.set(command.name, command);
+	});
 
 	if (message.content.startsWith('#')) {
 		const args = message
 			.content
 			.slice(1)
 			.split('');
-		const command = client
+		const command = message.client
 			.commands
 			.get('result');
 
@@ -27,6 +27,7 @@ const messageController = (message) => {
 	if (!message.content.startsWith(prefix) || message.author.bot) {
 		return;
 	}
+
 	const args = message
 		.content
 		.slice(prefix.length)
@@ -36,9 +37,9 @@ const messageController = (message) => {
 		.shift()
 		.toLowerCase();
 
-	const command = client
+	const command = message.client
 		.commands
-		.get(commandName) || client
+		.get(commandName) || message.client
 			.commands
 			.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
@@ -66,5 +67,3 @@ const messageController = (message) => {
 		return message.reply('there was an error trying to execute that command!');
 	}
 };
-
-export default messageController;

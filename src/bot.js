@@ -1,8 +1,8 @@
 'use strict';
-import 'dotenv/config.js';
-import Discord from 'discord.js';
-const client = new Discord.Client();
-import messageController from './controllers/message.js';
+import { Client } from 'discord.js';
+import { config } from 'dotenv';
+config();
+import { messageController } from './controllers/message.js';
 
 import { connectDb } from './models/index.js';
 import models from './models/index.js';
@@ -16,6 +16,8 @@ connectDb().then(async () => {
 	}
 	console.log('DB connected!');
 });
+
+const client = new Client();
 
 
 client.once('ready', () => {
