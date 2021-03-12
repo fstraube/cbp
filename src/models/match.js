@@ -35,6 +35,7 @@ matchSchema.statics.createMatch = async (data) => {
 matchSchema.statics.updateMatch = async (homeTeam, awayTeam, updateData) => {
 	try {
 		const match = await Match.findOne({ $and: [{ homeTeam, awayTeam }] });
+		console.log(match);
 		if (match.winner === null && match.loser === null) {
 			match.cups = updateData.cups;
 			match.winner = updateData.winner;
