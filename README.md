@@ -1,4 +1,4 @@
-# cbp
+# Cyber Beer Pong
 
 social discord bot which creates a tournament of 8 teams in 2 groups
 
